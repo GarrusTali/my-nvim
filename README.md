@@ -4,8 +4,8 @@
 | Action | Key | implementation |
 | :-  | :-: | :- |
 | Navigate buffers | [ ] | built-in command |
-| Navigate windows | h j k l | built-in command |
-| Move Window | H J K L | built-in command |
+| Navigate windows | j k l ; | built-in command |
+| Move Window | J K L : | built-in command |
 | Close window | / | built-in command |
 | Switch buffer by bufnr | 1 to 9 | built-in command |
 
@@ -22,7 +22,7 @@
 
 | Action | Key | implementation |
 | :-  | :-: | :- |
-| Kill Current Buffer | k | built-in command |
+| Kill Current Buffer | / | built-in command |
 
 ## Windows -- &lt;Leader&gt; + w
 

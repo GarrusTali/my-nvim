@@ -109,7 +109,7 @@ inoremap <silent><expr> <TAB>
 " close popup
 inoremap <expr><C-h>
 		\ deoplete#smart_close_popup()."\<C-h>"
-		inoremap <expr><BS>
+inoremap <expr><BS>
 		\ deoplete#smart_close_popup()."\<C-h>"
 " undo complete
 inoremap <expr><C-g> deoplete#undo_completion()
@@ -135,16 +135,16 @@ nnoremap <Leader>] :bnext<CR>
 nnoremap <Leader>[ :bprevious<CR>
 
 " navigate windows
-nnoremap <Leader>h <C-w>h
-nnoremap <Leader>j <C-w>j
-nnoremap <Leader>k <C-w>k
-nnoremap <Leader>l <C-w>l
+nnoremap <Leader>j <C-w>h
+nnoremap <Leader>k <C-w>j
+nnoremap <Leader>l <C-w>k
+nnoremap <Leader>; <C-w>l
 
 " move window
-nnoremap <Leader>H <C-w>H
-nnoremap <Leader>J <C-w>J
-nnoremap <Leader>K <C-w>K
-nnoremap <Leader>L <C-w>L
+nnoremap <Leader>J <C-w>H
+nnoremap <Leader>K <C-w>J
+nnoremap <Leader>L <C-w>K
+nnoremap <Leader>: <C-w>L
 
 " close window
 nnoremap <Leader>/ <C-w>c
@@ -163,7 +163,7 @@ nnoremap <Leader>fS :wall<CR>
 
 " ==Buffers -- <Leader> + b
 " kill
-nnoremap <Leader>bk :bd<CR>
+nnoremap <Leader>b/ :bd<CR>
 
 " ==Windows -- <Leader> + w
 " split current window
