@@ -7,13 +7,18 @@ set viewoptions=folds,options,cursor,unix,slash
 set encoding=utf-8
 set tabstop=4 shiftwidth=4 expandtab smarttab
 set autoindent
+set smartindent
+set shiftround
+set nospell
 
+set lazyredraw
 set laststatus=2
 set noshowmode
 set showcmd
 set number
 set relativenumber
 set cursorline
+set display+=lastline
 
 set termguicolors
 syntax on
@@ -22,6 +27,17 @@ set hidden
 set autoread
 set splitright
 set splitbelow
+
+set gdefault
+set ignorecase
+set smartcase
+set hlsearch
+set incsearch
+
+set infercase
+set complete-=i
+set complete+=kspell
+set completeopt=menuone,noselect,noinsert
 
 " Disable built-in plugins
 let g:loaded_python_provider = 1
@@ -82,6 +98,7 @@ Plug 'rust-lang/rust.vim'
 " utils-accel
 Plug 'francoiscabrol/ranger.vim'
 Plug 'rbgrouleff/bclose.vim'
+Plug 'tpope/vim-repeat'
 
 call plug#end()
 
@@ -157,6 +174,13 @@ call denite#custom#map(
       \)
 
 " =====> controller-jet
+
+" <===== typing-candy
+" == easymotion
+nmap <Leader><Leader>s <Plug>(easymotion-s2)
+nmap <Leader><Leader>L <Plug>(easymotion-overwin-line)
+
+" =====> typing-candy
 
 " <===== programming-rock
 " == deoplete
