@@ -107,10 +107,115 @@ call plug#end()
 colorscheme onedark
 
 " lightline
+let g:responsive_width_mid = 70
+let g:responsive_width_small = 50
+let g:omit_fileencoding = 'utf-8'
+let g:omit_fileformat = 'unix'
+
 let g:lightline = {
     \ 'colorscheme': 'one',
+    \ 'active': {
+    \   'left': [
+    \       ['mode'],
+    \       ['filename', 'readonly', 'modified'],
+    \       ['ale']
+    \   ],
+    \   'right': [
+    \       ['lineinfo'],
+    \       ['percent'],
+    \       ['fileformat', 'fileencoding', 'filetype']
+    \   ]
+    \ },
+    \ 'component_function': {
+    \   'ale':      'MyLineAle',
+    \   'fileencoding': 'MyLineFileencoding',
+    \   'fileformat':   'MyLineFileformat',
+    \   'filename': 'MyLineFilename',
+    \   'filetype': 'MyLineFiletype',
+    \   'lineinfo': 'MyLineInfo',
+    \   'mode':     'MyLineMode',
+    \   'percent':  'MyLinePercent',
+    \   'readonly': 'MyLineReadonly',
+    \ }
     \ }
 
+function! MyLineMode()
+  if &filetype ==# 'denite'
+    let l:mode_str = substitute(denite#get_status_mode(), "-\\| ", "", "g")
+    call lightline#link(tolower(l:mode_str[0]))
+    return l:mode_str
+  else
+    return winwidth(0) > g:responsive_width_small ? lightline#mode() : ''
+  endif
+endfunction
+
+function! MyLineFilename()
+  return &filetype ==# 'denite' ? denite#get_status_sources() :
+        \ expand('%:t') !=# '' ? expand('%:t') : '[No Name]'
+endfunction
+
+function! MyLineReadonly()
+    return winwidth(0) > g:responsive_width_mid ?
+        \ (&filetype !~? 'help' && &readonly ? '' : '') : ''
+endfunction
+
+function! MyLineAle()
+    let l:counts = ale#statusline#Count(bufnr(''))
+
+    let l:all_errors = l:counts.error + l:counts.style_error
+    let l:all_non_errors = l:counts.total - l:all_errors
+
+    return l:counts.total == 0 ? '' : printf(
+    \   '%d %d',
+    \   l:all_non_errors,
+    \   l:all_errors
+    \)
+endfunction
+
+function! MyLineFileformat()
+    return winwidth(0) > g:responsive_width_mid ?
+        \ (&fileformat !=# g:omit_fileformat ? &fileformat : '') : ''
+endfunction
+
+function! MyLineFileencoding()
+    return winwidth(0) > g:responsive_width_mid ?
+        \ (&fileencoding !=# '' ?
+            \ (&fileencoding !=# g:omit_fileencoding ? &fileencoding : '') :
+                \ (&encoding !=# g:omit_fileencoding ? &encoding : '')) : ''
+endfunction
+
+function! MyLineFiletype()
+    if winwidth(0) > g:responsive_width_mid
+        if &filetype !=# ''
+            return &filetype
+        else
+            return 'no ft'
+        endif
+    else
+        return ''
+    endif
+endfunction
+        
+function! MyLinePercent()
+    if winwidth(0) > g:responsive_width_small
+        if &filetype ==# 'denite'
+            return ''
+        else
+            return printf('%2d%%', line('.') * 100 / line('$'))
+        endif
+    else
+        return ''
+    endif
+endfunction
+
+function! MyLineInfo()
+    if &filetype ==# 'denite'
+        return denite#get_status_linenr()
+    else
+        return printf('%d:%-2d', line('.'), col('.'))
+    endif
+endfunction
+        
 " buftabline
 let g:buftabline_numbers = 2
 highlight link BufTabLineCurrent PmenuSel
@@ -141,7 +246,8 @@ call denite#custom#var('grep', 'final_opts', [])
 " == options
 call denite#custom#option('default', {
     \ 'highlight_matched_char': 'LineNr',
-    \ 'highlight_mode_insert': 'Search'
+    \ 'highlight_mode_insert': 'Search',
+    \ 'statusline': v:false
     \ })
 
 " == keymappings
