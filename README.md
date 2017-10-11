@@ -9,6 +9,13 @@
 | Close window | / | built-in command |
 | Switch buffer by bufnr | 1 to 9 | plugin (buftabline) |
 
+## Easymotion -- &lt;Leader&gt; + &lt;Leader&gt; (custom extend)
+
+| Action | Key | implementation |
+| :-  | :-: | :- |
+| Search by two chars | s | plugin (easymotion) |
+| Locate line in all windows | L | plugin (easymotion) |
+
 ## Files -- &lt;Leader&gt; + f
 
 | Action | Key | implementation |

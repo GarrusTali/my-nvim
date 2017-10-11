@@ -86,13 +86,16 @@ Plug 'tpope/vim-surround'
 Plug 'easymotion/vim-easymotion'
 
 " programming-rock
+" completion
 Plug 'Shougo/deoplete.nvim',   {'do': ':UpdateRemotePlugins'}
 Plug 'Shougo/neco-vim'
 Plug 'zchee/deoplete-jedi'
 Plug 'racer-rust/vim-racer'
 
+" lint
 Plug 'w0rp/ale'
 
+" syntax
 Plug 'rust-lang/rust.vim'
 
 " utils-accel
@@ -160,6 +163,10 @@ function! MyLineReadonly()
 endfunction
 
 function! MyLineAle()
+    if &filetype ==# 'denite'|| &filetype ==# 'help' || &filetype ==# ''
+        return ''
+    endif
+
     let l:counts = ale#statusline#Count(bufnr(''))
 
     let l:all_errors = l:counts.error + l:counts.style_error
@@ -311,6 +318,9 @@ inoremap <expr><C-g> deoplete#undo_completion()
 
 " == ale
 let g:ale_lint_delay=500
+
+nmap <silent> <C-j> <Plug>(ale_next_wrap)
+nmap <silent> <C-k> <Plug>(ale_previous_wrap)
 
 " == vim-racer
 let g:racer_cmd = '$HOME/.cargo/bin/racer'
