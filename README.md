@@ -54,3 +54,9 @@
 | Save all buffers and exit | s | built-in command |
 | Close all windows and exit | q | built-in command |
 | Discard changes and exit | Q | built-in command |
+
+## YCM -- &lt;Leader&gt; + y
+
+| Action | Key | implementation |
+| :-  | :-: | :- |
+| GoTo | g | plugin (ycm) |

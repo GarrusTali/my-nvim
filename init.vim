@@ -84,13 +84,14 @@ Plug 'Shougo/neomru.vim'
 " typing-candy
 Plug 'tpope/vim-surround'
 Plug 'easymotion/vim-easymotion'
+Plug 'wellle/targets.vim'
+Plug 'jiangmiao/auto-pairs'
+Plug 'scrooloose/nerdcommenter'
+Plug 'junegunn/vim-easy-align',             {'on': ['<Plug>(EasyAlign)', 'EasyAlign']}
 
 " programming-rock
 " completion
-Plug 'Shougo/deoplete.nvim',   {'do': ':UpdateRemotePlugins'}
-Plug 'Shougo/neco-vim'
-Plug 'zchee/deoplete-jedi'
-Plug 'racer-rust/vim-racer'
+Plug 'Valloric/YouCompleteMe'
 
 " lint
 Plug 'w0rp/ale'
@@ -102,6 +103,8 @@ Plug 'rust-lang/rust.vim'
 Plug 'francoiscabrol/ranger.vim'
 Plug 'rbgrouleff/bclose.vim'
 Plug 'tpope/vim-repeat'
+Plug 'mbbill/undotree'
+Plug 'kassio/neoterm'
 
 call plug#end()
 
@@ -296,35 +299,20 @@ nmap <Leader><Leader>L <Plug>(easymotion-overwin-line)
 " =====> typing-candy
 
 " <===== programming-rock
-" == deoplete
-let g:deoplete#enable_at_startup=1
-
-" complete
-inoremap <silent><expr> <TAB>
-		\ pumvisible() ? "\<C-n>" :
-		\ <SID>check_back_space() ? "\<TAB>" :
-		\ deoplete#mappings#manual_complete()
-		function! s:check_back_space() abort "{{{
-		let l:col = col('.') - 1
-		return !l:col || getline('.')[l:col - 1]  =~ '\s'
-		endfunction"}}}
-" close popup
-inoremap <expr><C-h>
-		\ deoplete#smart_close_popup()."\<C-h>"
-inoremap <expr><BS>
-		\ deoplete#smart_close_popup()."\<C-h>"
-" undo complete
-inoremap <expr><C-g> deoplete#undo_completion()
+" == youcompleteme
+let g:ycm_rust_src_path = '/home/garrustali/.rustup/toolchains/nightly-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/src'
 
 " == ale
 let g:ale_lint_delay=500
 
+" now learing rust only need to write some small single programs, so use rustc
+let g:ale_linters = {
+    \ 'rust': ['rustc']
+    \ }
+
 nmap <silent> <C-j> <Plug>(ale_next_wrap)
 nmap <silent> <C-k> <Plug>(ale_previous_wrap)
 
-" == vim-racer
-let g:racer_cmd = '$HOME/.cargo/bin/racer'
-let g:racer_experimental_completer = 1
 " =====> programming-rock
 
 " <===== utils-accel
@@ -372,16 +360,14 @@ nnoremap <Leader>/ <C-w>c
 nnoremap <Leader>ff :Ranger<CR>
 
 " open mru file
-nnoremap <Leader>fr :Denite
-    \ file_mru<CR>
+nnoremap <Leader>fr :Denite file_mru<CR>
 
 " open file and split
 nnoremap <Leader>fg :call OpenRangerIn("%:p:h", 'vsplit ')<CR>
 nnoremap <Leader>fn :call OpenRangerIn("%:p:h", 'split ')<CR>
 
 " open a new file
-nnoremap <Leader>fm :Denite
-    \ file:new<CR>
+nnoremap <Leader>fm :Denite file:new<CR>
 
 " save
 nnoremap <Leader>fs :w<CR>
@@ -390,6 +376,9 @@ nnoremap <Leader>fS :wall<CR>
 " ==Buffers -- <Leader> + b
 " denite
 nnoremap <Leader>bb :Denite -mode=normal buffer<CR>
+
+" ==Registers -- <Leader> + r
+nnoremap <Leader>rr :Denite register<CR>
 
 " ==Windows -- <Leader> + w
 " split current window
@@ -408,4 +397,35 @@ nnoremap <Leader>qQ :qall!<CR>
 " ==Help -- <Leader> + h
 nnoremap <Leader>hh :Denite help<CR>
 
+" ==YouCompleteMe --<Leader> + y
+nnoremap <Leader>yg :YcmCompleter GoTo<CR>
 " =====> leader key-map
+
+" <===== normal key-map refinement
+" Jump over wrapped lines
+nnoremap j gj
+nnoremap k gk
+nnoremap gj j
+nnoremap gk k
+
+" Center screen when jumping between search matches
+nnoremap n nzz
+nnoremap N Nzz
+nnoremap * *zz
+nnoremap # #zz
+
+" Do not lose visual selection while indenting
+nnoremap < <<
+nnoremap > >>
+vnoremap < <gv
+vnoremap > >gv
+
+" Increment/decrement number
+nnoremap + <c-a>
+nnoremap - <c-x>
+
+" Walk history with j/k
+cnoremap <c-j> <down>
+cnoremap <c-k> <up>
+
+" =====> normal key-map refinement
