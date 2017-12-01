@@ -60,3 +60,15 @@
 | Action | Key | implementation |
 | :-  | :-: | :- |
 | GoTo | g | plugin (ycm) |
+
+## Terminal -- &lt;Leader&gt; + t
+| Action | Key | implementation |
+| :-  | :-: | :- |
+| Open a neoterm | o | plugin (neoterm) |
+| Open a new neoterm | n | plugin (neoterm) |
+| Hide current neoterm | / | plugin (neoterm) |
+| Navigate neoterms | [] | plugin (neoterm) |
+| Send command to a neoterm | t and (1 to 2) | plugin (neoterm) |
+| Compile current file | c | plugin (neoterm) |
+| Run binary of current file | r | plugin (neoterm) |
+| Kill current process in neoterm | k | plugin (neoterm) |

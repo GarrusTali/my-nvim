@@ -397,6 +397,36 @@ nnoremap <Leader>qQ :qall!<CR>
 " ==Help -- <Leader> + h
 nnoremap <Leader>hh :Denite help<CR>
 
+" ==Terminal -- <Leader> + t
+" open & close
+nnoremap <Leader>to :Topen<CR>
+nnoremap <Leader>tn :Tnew<CR>
+nnoremap <Leader>t/ :Tclose<CR>
+
+" navigate between neoterms
+nnoremap <Leader>t[ :Tprevious<CR>
+nnoremap <Leader>t] :Tnext<CR>
+
+" send command
+nnoremap <Leader>tt :T 
+nnoremap <Leader>t1 :T1 
+nnoremap <Leader>t2 :T2 
+
+" compile current file
+function! CompileOne()
+    if &filetype ==# 'rust'
+        exe ':T rustc %:p'
+    endif
+endfunction
+
+nnoremap <Leader>tc :call CompileOne()<CR>
+
+" run binary of current file
+nnoremap <Leader>tr :T ./%:r<CR>
+
+" kill the running command
+nnoremap <Leader>tk :Tkill<CR>
+
 " ==YouCompleteMe --<Leader> + y
 nnoremap <Leader>yg :YcmCompleter GoTo<CR>
 " =====> leader key-map
