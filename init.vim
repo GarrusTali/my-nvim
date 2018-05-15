@@ -307,7 +307,11 @@ let g:ale_lint_delay=500
 
 " now learing rust only need to write some small single programs, so use rustc
 let g:ale_linters = {
-    \ 'rust': ['rustc']
+    \ 'rust': ['rls']
+    \ }
+
+let g:ale_fixers = {
+    \ 'rust': ['rustfmt']
     \ }
 
 nmap <silent> <C-j> <Plug>(ale_next_wrap)
@@ -373,13 +377,6 @@ nnoremap <Leader>fm :Denite file:new<CR>
 nnoremap <Leader>fs :w<CR>
 nnoremap <Leader>fS :wall<CR>
 
-" ==Buffers -- <Leader> + b
-" denite
-nnoremap <Leader>bb :Denite -mode=normal buffer<CR>
-
-" ==Registers -- <Leader> + r
-nnoremap <Leader>rr :Denite register<CR>
-
 " ==Windows -- <Leader> + w
 " split current window
 nnoremap <Leader>wg <C-w>v
@@ -394,14 +391,13 @@ nnoremap <Leader>qs :xall<CR>
 nnoremap <Leader>qq :qall<CR>
 nnoremap <Leader>qQ :qall!<CR>
 
-" ==Help -- <Leader> + h
-nnoremap <Leader>hh :Denite help<CR>
-
 " ==Terminal -- <Leader> + t
 " open & close
-nnoremap <Leader>to :Topen<CR>
-nnoremap <Leader>tn :Tnew<CR>
+nnoremap <Leader>to :vertical Tnew<CR>
+nnoremap <Leader>tg :vertical Topen<CR>
+nnoremap <Leader>tn :belowright Topen<CR>
 nnoremap <Leader>t/ :Tclose<CR>
+nnoremap <Leader>td :TcloseAll<CR>
 
 " navigate between neoterms
 nnoremap <Leader>t[ :Tprevious<CR>
@@ -409,8 +405,8 @@ nnoremap <Leader>t] :Tnext<CR>
 
 " send command
 nnoremap <Leader>tt :T 
-nnoremap <Leader>t1 :T1 
-nnoremap <Leader>t2 :T2 
+nnoremap <Leader>t1 :1T 
+nnoremap <Leader>t2 :2T 
 
 " compile current file
 function! CompileOne()
@@ -427,8 +423,47 @@ nnoremap <Leader>tr :T ./%:r<CR>
 " kill the running command
 nnoremap <Leader>tk :Tkill<CR>
 
-" ==YouCompleteMe --<Leader> + y
-nnoremap <Leader>yg :YcmCompleter GoTo<CR>
+" ==Denite Buffers Collection -- <Leader> + h
+nnoremap <Leader>hb :Denite -mode=normal buffer<CR>
+nnoremap <Leader>hh :Denite help<CR>
+nnoremap <Leader>hr :Denite register<CR>
+
+" ==Code --<Leader> + '
+" goto by YouCompleteMe
+nnoremap <Leader>'g :YcmCompleter GoTo<CR>
+
+" format code by ALE
+nnoremap <Leader>'f :ALEFix<CR>
+
+" ==Language Specific Collection
+" ==Rust --<Leader> + j
+" !!!warning: now just use one terminal
+" check current file
+function! CargoCheck()
+    if &filetype ==# 'rust'
+        if g:neoterm.has_any()
+            exe ':vertical Topen'
+        else
+            exe ':vertical Tnew'
+        endif
+        exe ':T cd %:p:h && cargo check'
+    endif
+endfunction
+
+" build and run
+function! CargoRun()
+    if &filetype ==# 'rust'
+        if g:neoterm.has_any()
+            exe ':vertical Topen'
+        else
+            exe ':vertical Tnew'
+        endif
+        exe ':T cd %:p:h && cargo run'
+    endif
+endfunction
+
+nnoremap <Leader>ju :call CargoCheck()<CR>
+nnoremap <Leader>ji :call CargoRun()<CR>
 " =====> leader key-map
 
 " <===== normal key-map refinement

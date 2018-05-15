@@ -55,20 +55,39 @@
 | Close all windows and exit | q | built-in command |
 | Discard changes and exit | Q | built-in command |
 
-## YCM -- &lt;Leader&gt; + y
-
-| Action | Key | implementation |
-| :-  | :-: | :- |
-| GoTo | g | plugin (ycm) |
-
 ## Terminal -- &lt;Leader&gt; + t
 | Action | Key | implementation |
 | :-  | :-: | :- |
-| Open a neoterm | o | plugin (neoterm) |
-| Open a new neoterm | n | plugin (neoterm) |
+| Open a new neoterm | o | plugin (neoterm) |
+| Split to open a neoterm | g n | plugin (neoterm) |
 | Hide current neoterm | / | plugin (neoterm) |
-| Navigate neoterms | [] | plugin (neoterm) |
+| Hide all neoterms | d | plugin (neoterm) |
+| Navigate neoterms | [ ] | plugin (neoterm) |
 | Send command to a neoterm | t and (1 to 2) | plugin (neoterm) |
 | Compile current file | c | plugin (neoterm) |
 | Run binary of current file | r | plugin (neoterm) |
 | Kill current process in neoterm | k | plugin (neoterm) |
+
+## Denite Buffers Collection -- &lt;Leader&gt; + h
+
+| Action | Key | implementation |
+| :-  | :-: | :- |
+| Open denite buffer | b | plugin (denite) |
+| Help denite buffer | h | plugin (denite) |
+| register denite buffer | r | plugin (denite) |
+
+## Code --&lt;Leader&gt; + '
+| Action | Key | implementation |
+| :-  | :-: | :- |
+| Fix | f | plugin(ale) |
+| Goto | g | plugin(ycm) |
+
+# Language Specific Collection
+## Rust --&lt;Leader&gt; + j
+
+| Action | Key | implementation |
+| :-  | :-: | :- |
+| Cargo check | u | plugin(neoterm) |
+| Cargo run | i | plugin(neoterm) |
+
+
